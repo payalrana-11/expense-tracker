@@ -1,74 +1,257 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+:root{
+    --box-shadow: 0 0 8px #00ffc6;
+}
 
-</head>
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
 
-<body>
-    <div class="heading">
-    <h2>Expense Tracker</h2>
-  </div>
-    <div class="container">
-      <div class="left-section">
-        <h4>Your Balance</h4>
-        <h1 id="balance">₹0.00</h1>
-        <div class="inc-exp-container">
-            <div>
-                <h4>Income</h4>
-                <div class="income">
-                <p id="money-plus" class="money-plus">
-                    ₹0.00
-                </p>
-                <svg class="income-graph" width="40" height="25">
-                    <polyline class="income-line" points="0,25 8,20 16,12 24,16 32,8 40,4" />
-                </svg>
-            </div>
-            </div>
-            <div>
-                <h4>Expense</h4>
-                <div class="expense">
-                <p id="money-minus" class="money-minus">
-                    ₹0.00
-                </p>
-                <svg class="expense-graph" width="40" height="25">
-                    <polyline class="expense-line" points="0,4 8,8 16,16 24,12 32,20 40,25" />
-                </svg>
-            </div>
-            </div>
-        </div>
-    </div>
+body{
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    background-attachment: fixed;
+    font-family: "Quicksand", sans-serif;
+    color: #f1f5f9; 
+}
 
-       <div class="middle-section">
-            <h3>History</h3>
-            <ul id="list" class="list">
-                <li class="minus">
-                    Cash <span>-₹400</span> <button class="delete-btn">x</button>
-                </li>
-            </ul>
-        </div>
+.container{
+    display: flex;
+    margin: auto;
+    max-width:1200px;
+    width :90%;
+}
 
-        <div class="right-section">
-            <h3>Add Transactions</h3>
-            <form id="form">
-                <div class="form-control">
-                    <label for="text">Text</label>
-                    <input type="text" id="text" placeholder="Enter Text..." autocomplete="off">
-                </div>
-                <div class="form-control">
-                    <label for="amount">Amount</label>
-                    <input type="number" id="amount" placeholder="Enter Amount...">
-                </div>
-                <button class="btn">Add Transaction</button>
-            </form>
-        </div>   
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+.income{
+    display: flex;
+    justify-content: space-between;
+}
+.income-graph {
+    stroke: #10b981;;
+    stroke-width: 3;
+}
+
+.expense{
+    display: flex;
+    justify-content: space-between;
+}
+
+.expense-graph {
+    stroke: #ef4444;
+    stroke-width: 3;
+}
+
+.left-section{
+    display : flex;
+    flex-direction: column;
+    background-color: #1e293b;
+    box-shadow: var(--box-shadow);
+    width:30%;
+    max-height:370px;
+    margin-right: 30px;
+    padding:50px 20px 20px;
+    border-radius: 16px;
+    animation: slideInLeft 1s ease forwards;
+}
+
+.inc-exp-container{
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.money-plus{
+    color: #10b981;
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 1.3rem;
+}
+
+.money-minus{
+    color: #ef4444;
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 1.3rem;
+}
+
+.middle-section{
+    display : flex;
+    flex-direction: column;
+    background-color: #1e293b;
+    box-shadow: var(--box-shadow);
+    width:40%;
+    margin-right: 30px;
+    border-radius: 16px;
+    padding: 0 20px 0;
+    max-height:370px;
+    overflow-y: auto; 
+    animation: fadeIn 1s ease forwards;
+}
+
+.list{
+    list-style-type: none;
+    margin-bottom: 40px;
+}
+
+.list li{
+    background-color: #334155;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.list li.plus{
+    border-right: 5px solid #10b981;
+}
+
+.list li.minus{
+    border-right: 5px solid #ef4444;
+}
+
+.delete-btn{
+    cursor: pointer;
+    background-color: #ef4444;
+    border: 0;
+    color: fff;
+    font-size: 20px;
+    line-height: 30px;
+    padding: 2px 5px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    opacity: 0;
+    transform: translate(-100%,-50%);
+    transition: opacity 0.3s ease;
+}
+
+.list li:hover .delete-btn{
+    opacity: 1;
+}
+
+.right-section{
+    display : flex;
+    flex-direction: column;
+    background-color: #1e293b;
+    box-shadow: var(--box-shadow);
+    width:30%;
+    max-height:370px;
+    padding:0 20px 20px;
+    border-radius: 16px;
+    animation: slideInRight 1s ease forwards;
+}
+
+label{
+    display: inline-block;
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+input{
+    border : 1px solid #64748b;
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    background-color: #334155;
+    outline: none;
+    border-radius: 8px;
+    color: #f1f5f9;
+}
+
+ #text:focus,#amount:focus{
+    border-color: #00ffc6;
+ }
+ 
+.btn{
+    cursor: pointer;
+    background: linear-gradient(135deg,#10b981,#00ffc6);
+    color :#fff;
+    border: none;
+    font-size: 16px;
+    margin: 20px 0 25px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.btn:hover{
+    transform: scale(1.05);
+}
+
+.heading{
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+}
+
+h1{
+    font-size: 3rem;
+}
+
+h2{
+    font-family: cursive;
+    font-size: 2.75rem;
+    animation: fadeInDown 1s ease forwards;
+}
+
+h3{
+    border-bottom: 1px solid #64748b;
+    padding-bottom: 10px;
+    margin: 40px 0 10px; /*top ,left-right ,bottom*/
+    font-size: 1.75rem;
+}
+
+h4{
+   text-transform: uppercase;
+   font-size: 1.25rem;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 90vw;
+    }
+    
+    .left-section, .middle-section, .right-section {
+        width: 100%;
+        margin-bottom:10px;
+    }
+    h1{
+        font-size: 2.5rem;
+    }
+    h2{
+        font-size: 2rem;
+    }
+    h3{
+        font-size: 1.5rem;
+    }
+    h4{
+        font-family: 1.25rem;
+    }
+}
